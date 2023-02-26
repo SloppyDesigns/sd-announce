@@ -1,6 +1,9 @@
 # sd-announce
 Simple Resource to add announce System to your Server with Discord Logging
 
+## Command
+/announce for Admins only
+
 ## Protection
 All events are protected and cannot be called directly.
 
