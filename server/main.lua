@@ -15,16 +15,24 @@ if Config.Framework == 'QBCore' then
 end
 
 if Config.Framework == 'ESX' then
-    ESX.RegisterCommand('announce', 'admin', function(xPlayer, args, showError)
-        if xPlayer.source > 0 then
-            local message
-            if args[1] then message = table.concat(args.message, " ") end
-            Config.Announcement(message)
-            if Config.Webhook ~= '' then
-                exports['sd-announce']:CreateLog(Config.Webhook, 'Server Announcement', "**" .. message .. "**", 12010050)
+
+    TriggerEvent('chat:addSuggestion', '/announce', 'Send Server Announcement', {
+        { name = "message", help = "Server Announcement" }
+    })
+
+    RegisterCommand("announce", function(source, args, rawCommand)
+        if (source > 0) then
+            local xPlayer = ESX.GetPlayerFromId(source)
+            if xPlayer.getGroup() == 'admin' then
+                local message
+                if args[1] then message = table.concat(args, " ") end
+                Config.Announcement(message)
+                if Config.Webhook ~= '' then
+                    exports['sd-announce']:CreateLog(Config.Webhook, 'Server Announcement', "**" .. message .. "**", 12010050)
+                end
             end
         end
-    end, false, { help = 'Send Server Announcement', arguments = { { name = 'message', help = 'Announcement Message', type = 'string' } }})
+    end, false)
 end
 
 if Config.TxAdmin['ScheduledRestart'] then
