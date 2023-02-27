@@ -57,9 +57,9 @@ end
 if Config.TxAdmin['PlayerBanned'] then
     AddEventHandler('txAdmin:events:playerBanned', function(data)
         if GetInvokingResource() ~= "monitor" or type(data) ~= "table" then return end
-        Config.Announcement(('%s Has Been Banned By %s <br> Reason: %s'):format(GetPlayerName(data.target), data.author, data.reason))
+        Config.Announcement(('%s Has Been Banned By %s <br> Reason: %s'):format(GetPlayerName(data.targetNetId), data.author, data.reason))
         if Config.Webhook ~= '' then
-            exports['sd-announce']:CreateLog(Config.Webhook, 'Player Banned', "Player: **" .. GetPlayerName(data.target) .. "** \nAutor: **" .. data.author .. "** \nReason: **" .. data.reason .. "**", 16722688)
+            exports['sd-announce']:CreateLog(Config.Webhook, 'Player Banned', "Player: **" .. GetPlayerName(data.targetNetId) .. "** \nAutor: **" .. data.author .. "** \nReason: **" .. data.reason .. "**", 16722688)
         end
     end)
 end
